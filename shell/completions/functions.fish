@@ -3,6 +3,9 @@
 #
 # Extra completions are added in the installation process.
 # These include completions for browsers and versions.
+#
+# Any invalid syntax will be replaced with valid BASH code
+# during the installation process.
 
 function __fish_cani_needs_command
   set -l cmd (commandline -opc)
@@ -33,11 +36,11 @@ end
 
 complete -f -c cani
 
+# fish shows more detail so we cannot quite yet use KNOWN_COMMANDS here yet.
 complete -f -c cani -n '__fish_cani_needs_command' -a 'use' -d 'Display an overview of features including support'
 complete -f -c cani -n '__fish_cani_needs_command' -a 'show' -d 'Display feature support for a specific browser'
 complete -f -c cani -n '__fish_cani_needs_command' -a 'help' -d 'Show command help'
 complete -f -c cani -n '__fish_cani_needs_command' -a 'version' -d 'Print the version number'
 complete -f -c cani -n '__fish_cani_needs_command' -a 'update' -d 'force update api data and completions'
 complete -f -c cani -n '__fish_cani_needs_command' -a 'purge' -d 'remove all completion, configuration files and data stored by this cani'
-complete -f -c cani -n '__fish_cani_needs_command' -a 'install_completions' -d 'install completions for bash, zsh and fish'
-# update purge install_completions
+complete -f -c cani -n '__fish_cani_needs_command' -a 'install' -d 'install completions for bash, zsh and fish'

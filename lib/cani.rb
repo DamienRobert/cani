@@ -14,6 +14,8 @@ require 'cani/completions'
 
 # Cani
 module Cani
+  KNOWN_COMMANDS = %w[show use install update purge help version]
+
   def self.api
     @api ||= Api.new
   end
@@ -22,6 +24,9 @@ module Cani
     @settings ||= Config.new
   end
 
+  def self.completions
+    Completions
+  end
 
   def self.exec!(command, *args)
     command = :help unless command && respond_to?(command)
@@ -32,7 +37,9 @@ module Cani
       use args[0]
     when :show
       show args[0], args[1]
-    when :update, :purge, :help, :version, :install_completions
+    when :install, :update, :purge
+      send command
+    when :help, :version
       send command
     else
       help
@@ -84,18 +91,18 @@ module Cani
     puts VERSION
   end
 
-  def self.install_completions
-    Completions.install!
+  def self.install
+    completions.install!
   end
 
   def self.purge
-    Completions.remove!
+    completions.remove!
     api.remove!
     config.remove!
   end
 
   def self.update
-    api.update! && Completions.install! || exit(1) unless api.updated?
+    api.update! && completions.install! || exit(1) unless api.updated?
   end
 
   def self.edit

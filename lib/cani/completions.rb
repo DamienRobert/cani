@@ -17,7 +17,7 @@ module Cani
         "\ncomplete -f -c cani -n '__fish_cani_using_command use' -a '#{feature.name}' -d '#{description}'"
       end
 
-      tpl + shw + "\n" + use
+      tpl.gsub('{{commands}}', Cani::KNOWN_COMMANDS.join(' ')) + shw + "\n" + use
     end
 
     def self.generate_zsh
@@ -32,6 +32,7 @@ module Cani
 
       tpl.gsub('{{names}}', Cani.api.browsers.map(&:abbr).join(' '))
          .gsub('{{features}}', Cani.api.features.map(&:name).join(' '))
+         .gsub('{{commands}}', Cani::KNOWN_COMMANDS.join(' '))
          .gsub '{{versions}}', versions
     end
 
@@ -47,6 +48,7 @@ module Cani
 
       tpl.gsub('{{names}}', Cani.api.browsers.map(&:abbr).join(' '))
          .gsub('{{features}}', Cani.api.features.map(&:name).join(' '))
+         .gsub('{{commands}}', Cani::KNOWN_COMMANDS.join(' '))
          .gsub '{{versions}}', versions
     end
 

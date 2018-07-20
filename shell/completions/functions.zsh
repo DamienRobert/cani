@@ -1,14 +1,13 @@
 # This is a template file that adds the most basic top level completions.
 # It is used during installation of completions via the CLI.
-# Unlike the functions.fish file, this one cannot be run directly.
 #
-# The invalid syntax will be replaced with valid ZSH code
+# Any invalid syntax will be replaced with valid ZSH code
 # during the installation process.
 
 function _cani {
   local line
 
-  _arguments -C "1: :(use show help version update purge install_completions)" \
+  _arguments -C "1: :({{commands}})" \
                 "*::arg:->args"
 
   case $line[1] in
